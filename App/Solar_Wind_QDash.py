@@ -40,9 +40,14 @@ app.layout = html.Div([
             # Second Div tag containing the market summary performace:
             html.Div(children=[
                 html.H1(
+                    children= TAN.performance.Security[0] + ' (' + TAN.performance.index[0] + ')',
+                ),
+                # Necessary Market information:
+                html.Div(children='Current Price: $' + str(TAN.performance.Price[0])),
+                html.Div(children='Quarter Return: ' + str(TAN.performance.Fin_return[0])),
+                html.Div(children='Sharpe Ratio: ' + str(TAN.performance.Sharpe_ratio[0]))
+            ]),
 
-                )
-            ])
         ])
     ])
 ])
