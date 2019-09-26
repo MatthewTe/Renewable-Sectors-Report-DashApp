@@ -9,6 +9,8 @@ from dash.dependencies import Input, Output, State
 # Initalizing The Quarterly_Report objects for the desired sectors:
 TAN = Sector_Quarterly_Report('Solar Energy', 'TAN')
 
+# TODO: Add CSS styling
+# TODO: Complete the rest of the Dash application based on the written outline.
 
 app = dash.Dash()
 
@@ -30,7 +32,16 @@ app.layout = html.Div([
                     }
                 ),
                 # Necessary ETF information:
-                html.Div(children='Current Price: $' + str(TAN.performance.Price[1]) )
+                html.Div(children='Current Price: $' + str(TAN.performance.Price[1])),
+                html.Div(children='Quarter Return: ' + str(TAN.performance.Fin_return[1])),
+                html.Div(children='Sharpe Ratio: ' + str(TAN.performance.Sharpe_ratio[1]))
+            ]),
+
+            # Second Div tag containing the market summary performace:
+            html.Div(children=[
+                html.H1(
+
+                )
             ])
         ])
     ])
