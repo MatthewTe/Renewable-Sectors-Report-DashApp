@@ -351,6 +351,7 @@ class Quarterly_Report(object):
         self.avg_market_returns = self.get_avg_market_returns() # inital dataset
         self.mean_market_returns = self.avg_market_returns.mean() # mean
         self.market_retrun_stdv = self.avg_market_returns.std() # standard deviation
+        self.market_price = Security('^GSPC').price
 
         # Sharpe Ratio:  0.023 HISA savings account interest for risk free return
         self.market_sharpe = (self.mean_market_returns - 0.023) / self.market_retrun_stdv
@@ -588,7 +589,7 @@ class Sector_Quarterly_Report(Quarterly_Report):
         """
         # Creating empty dataframe:
         performance_df = pd.DataFrame(columns = ['Security', 'Ticker', 'Sharpe_ratio',
-         'avg_return', 'Fin_return'])
+         'avg_return', 'Fin_return', 'Price'])
 
         # Initalizing ETF data
         ETF = self.performance_metrics(self.Sector_ETF)
@@ -598,7 +599,8 @@ class Sector_Quarterly_Report(Quarterly_Report):
                                                 'Ticker' : '^GSPC',
                                                 'Sharpe_ratio': self.market_sharpe,
                                                 'avg_return': self.mean_market_returns,
-                                                'Fin_return': self.avg_market_returns[-1]
+                                                'Fin_return': self.avg_market_returns[-1],
+                                                'Price': self.market_price
                                                 # TODO: Add Volatility to dataframe
                                                 # TODO: Add Alpha to dataframe
                                                 }, ignore_index=True)
@@ -608,7 +610,8 @@ class Sector_Quarterly_Report(Quarterly_Report):
                                                 'Ticker': self.Sector_ETF.ticker,
                                                 'Sharpe_ratio': ETF['sharpe'],
                                                 'avg_return': ETF['avg_return'],
-                                                'Fin_return': ETF['final_return']
+                                                'Fin_return': ETF['final_return'],
+                                                'Price': self.Sector_ETF.price
                                                 # TODO:  Add Volatility to dataframe
                                                 # TODO: Add Alpha to dataframe
                                                 }, ignore_index=True)
@@ -630,6 +633,7 @@ class Sector_Quarterly_Report(Quarterly_Report):
                 performance_df = performance_df.append(
                 {'Security': Security.title,
                 'Ticker' : Security.ticker,
+                'Price' : Security.price,
                 'Sharpe_ratio' : metrics['sharpe'],
                 'avg_return' : metrics['avg_return'],
                 'Fin_return' : metrics['final_return']
@@ -642,6 +646,7 @@ class Sector_Quarterly_Report(Quarterly_Report):
                 performance_df = performance_df.append(
                     {'Security': 'NaN',
                     'Ticker' : 'NaN',
+                    'Price': 'NaN',
                     'Sharpe_ratio' : 'NaN',
                     'avg_return' : 'NaN',
                     'Fin_return' : 'NaN'
